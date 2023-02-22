@@ -14,6 +14,8 @@ jobs:
     env:
       tagsName:  ${{ github.sha }}
     steps:
+    - name: Free Disk Space
+    - uses: ShubhamTatvamasi/free-disk-space-action@1.0.0
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: | 
