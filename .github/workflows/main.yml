@@ -1,0 +1,29 @@
+name: mmselfupDocker
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      tagsName:  ${{ github.sha }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: | 
+        docker build . --file Dockerfile --tag my-mmselfup:$tagsName
+        docker save my-mmselfup:$tagsName -o ${{ github.workspace }}/mmselfup.tar
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        # Artifact name
+        name: my-mmselfup
+        # A file, directory or wildcard pattern that describes what to upload
+        path: ${{ github.workspace }}/mmselfup.tar
+        # The desired behavior if no files are found using the provided path.
