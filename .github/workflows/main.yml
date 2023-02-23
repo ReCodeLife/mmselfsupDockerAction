@@ -4,7 +4,9 @@ name: mmselfupDocker
 # 触发条件：当branch触发push（push，merge Pull Request），且 tag 为 image.xxx 时触发工作流。
 on:
   push:
-    tags: main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
     
 # 工作流程，可包含多个作业
 jobs:
